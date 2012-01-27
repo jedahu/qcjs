@@ -14,6 +14,10 @@
 phantom.injectJs('quickcheck/qc.js');
 phantom.injectJs('out/all.js');
 
+Object.prototype.toString = function() {
+  return cljs.core.pr_str(this);
+};
+
 var listener = new qc.ConsoleListener;
 listener.failCount = 0;
 listener.done = function() {
@@ -26,5 +30,6 @@ listener.failure = function(result) {
 try {
   qc.runProps(new qc.Config({}), listener);
 } catch (e) {
+  console.log(e);
   phantom.exit(1);
 }
